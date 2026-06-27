@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "marked": "^18.0.5",
+    "pdf-parse": "^2.4.5"
+  }
+}
