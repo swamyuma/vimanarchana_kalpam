@@ -473,6 +473,8 @@ header.top-header {
   background: radial-gradient(ellipse at center, var(--bg-active) 0%, var(--bg-secondary) 100%);
   border: 5px double var(--accent-gold);
   border-radius: 8px;
+  justify-content: space-evenly;
+  padding: 4.5% 6%;
 }
 
 /* Prologue */
@@ -525,24 +527,26 @@ header.top-header {
 /* ========== Cover Elements ========== */
 .cover-sanskrit {
   font-family: var(--font-devanagari);
-  font-size: 1.5rem;
+  font-size: clamp(1.9rem, 6.2vh, 4.4rem);
   color: var(--accent-gold);
-  margin-bottom: 10px;
+  margin-bottom: 0.4em;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 0.08em;
 }
 
 .cover-title {
   font-family: var(--font-headers);
-  font-size: 1.5rem;
+  font-size: clamp(2rem, 7.2vh, 5.2rem);
   font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: 1.5px;
-  margin-bottom: 16px;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.3em;
+  line-height: 1.15;
 }
 
 .cover-mandala {
-  width: 110px; height: 110px;
+  width: clamp(120px, 18vh, 230px); height: clamp(120px, 18vh, 230px);
+  flex: none;
   background: radial-gradient(circle, rgba(212,175,55,0.05) 0%, rgba(212,175,55,0.2) 100%);
   border: 2px dashed var(--accent-gold);
   border-radius: 50%;
@@ -555,24 +559,65 @@ header.top-header {
 
 .cover-mandala::after {
   content: 'ॐ';
-  font-size: 2.2rem;
+  font-size: clamp(2.6rem, 9.5vh, 5.6rem);
   color: var(--accent-gold);
   animation: spin-reverse 30s linear infinite;
 }
 
 .cover-author {
   font-family: var(--font-headers);
-  font-size: 0.82rem;
+  font-size: clamp(1.05rem, 3.1vh, 2rem);
+  letter-spacing: 0.14em;
   color: var(--accent-gold);
-  margin-top: 14px;
+  margin-top: 0;
 }
 
 .cover-desc {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  max-width: 80%;
-  margin-top: 10px;
-  line-height: 1.5;
+  font-size: clamp(0.88rem, 2.3vh, 1.4rem);
+  color: var(--text-secondary);
+  max-width: 92%;
+  margin-top: 0;
+  line-height: 1.7;
+}
+
+.cover-dedication {
+  font-size: clamp(0.84rem, 2.2vh, 1.35rem);
+  color: var(--text-secondary);
+  width: 82%;
+  max-width: 680px;
+  margin-top: 0;
+  padding-top: clamp(14px, 3vh, 32px);
+  line-height: 2;
+  letter-spacing: 0.02em;
+  border-top: 1px solid rgba(180, 150, 90, 0.55);
+}
+
+.cover-presenter {
+  font-family: var(--font-headers);
+  font-size: clamp(1.05rem, 2.8vh, 1.75rem);
+  color: var(--accent-gold);
+  letter-spacing: 0.04em;
+}
+
+.cover-dedication-name {
+  display: inline-block;
+  font-family: var(--font-headers);
+  font-size: clamp(1.15rem, 3.5vh, 2.2rem);
+  color: var(--accent-gold);
+  letter-spacing: 0.08em;
+  margin: 0.35em 0;
+}
+
+.cover-contact {
+  /* NOT var(--font-headers): that is Cinzel, which has no true minuscules and renders
+     an email address in full capitals. Lora has real lowercase. */
+  font-family: var(--font-text);
+  font-size: clamp(0.78rem, 1.9vh, 1.15rem);
+  color: var(--accent-gold);
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  word-break: break-word;
+  margin-top: 0;
 }
 
 /* ========== Reader Content ========== */
@@ -13526,6 +13571,8 @@ function coverHTML() {
     <div class="cover-mandala"></div>
     <div class="cover-author">SAGE MARĪCI</div>
     <div class="cover-desc">Vaikhānasa Āgama · Ayuta-grantha-saṃhitā<br>100 Chapters — Sanskrit · Transliteration · Translation</div>
+    <div class="cover-dedication">Prepared according to the wishes of<br><span class="cover-dedication-name">Dr. R. Nagaswamy</span><br>Presented by <span class="cover-presenter">Uma Nagaswamy</span></div>
+    <div class="cover-contact">tamilarts.academybooks@gmail.com</div>
   </div>`;
 }
 
