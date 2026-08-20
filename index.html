@@ -875,7 +875,8 @@ body.sidebar-closed aside.sidebar {
     position: absolute;
     top: 0; bottom: 0; left: 0;
     transform: translateX(-100%);
-    width: 260px;
+    /* not the full width: a drawer that covers everything reads as a broken screen */
+    width: min(78vw, 260px);
   }
 
   body:not(.sidebar-closed) aside.sidebar {
@@ -13381,7 +13382,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const reflow = debounce(() => { paginationCache = {}; goToLoc(state.loc, false); }, 150);
   window.addEventListener('resize', reflow);
   LAYOUT_MQ.addEventListener('change', reflow);
+
+  // Rotating a tablet into portrait, or narrowing a desktop window, would otherwise leave the
+  // sidebar sitting over the text as it becomes an overlay.
+  SIDEBAR_OVERLAY_MQ.addEventListener('change', e => {
+    if (e.matches && state.sidebarOpen) {
+      state.sidebarOpen = false;
+      document.body.classList.add('sidebar-closed');
+      saveState();
+    }
+  });
 });
+
+// The breakpoint at which the sidebar stops being a column and becomes an overlay drawer. It must
+// stay in step with the "@media (max-width: 900px)" block in the stylesheet.
+const SIDEBAR_OVERLAY_MQ = window.matchMedia('(max-width: 900px)');
 
 // --- State persistence ---
 function loadSavedState() {
@@ -13391,6 +13406,9 @@ function loadSavedState() {
   if (f) state.fontSize = parseInt(f);
   const s = localStorage.getItem('viman_sidebar_open');
   if (s !== null) state.sidebarOpen = s === 'true';
+  // Below 900px the sidebar is an OVERLAY, so an open one hides the page entirely. The stored
+  // preference is almost always "open" because that is the desktop default — never restore it here.
+  if (SIDEBAR_OVERLAY_MQ.matches) state.sidebarOpen = false;
   const l = localStorage.getItem('viman_loc');
   if (l) {
     try {
